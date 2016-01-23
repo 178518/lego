@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flex DEMO</title>
+  <meta name="description" content="lego react compontent"/>
+  <meta name="keywords" content="lego react compontent"/>
+  <meta charset="utf-8"/>
+  <!--
+      第一个meta标签表示：强制让文档的宽度与设备的宽度保持1:1，并且文档最大的宽度比例是1.0，且不允许用户点击屏幕放大浏览；
+  尤其要注意的是content里多个属性的设置一定要用分号+空格来隔开，如果不规范将不会起作用。
+  其中：
+  width - viewport的宽度
+  height - viewport的高度
+  initial-scale - 初始的缩放比例
+  minimum-scale - 允许用户缩放到的最小比例
+  maximum-scale - 允许用户缩放到的最大比例
+  user-scalable - 用户是否可以手动缩放
+  第二个meta标签是iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览；
+  第三个meta标签也是iphone的私有标签，它指定的iphone中safari顶端的状态条的样式；
+  第四个meta标签表示：告诉设备忽略将页面中的数字识别为电话号码
+  在设置了initial-scale=1 之后，我们终于可以以1:1 的比例进行页面设计了
+      -->
+  <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+
+  <!--icon-->
+  <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+  <!--当用户把连接保存到手机桌面时使用的图标-->
+  <link rel="apple-touch-icon" sizes="57x57" href="//apple-touch-icon-114.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="//apple-touch-icon-114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="//apple-touch-icon-144.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="//apple-touch-icon-144.png">
+
+  <link href="http://www.w3school.com.cn" hreflang="zh" rel="alternate"/>
+
+  <!--DNS预解析-->
+  <link rel="dns-prefetch" href="//github.com" />
+
+  <script data-debug src="__build/js/flexible/flexible.js"></script>
+  <!--这里样式是异步模式，所以要强制写-->
+  <style>
+    div[class^="col-"] {
+      text-align: center;
+      font-size: 0.5rem;
+    }
+
+    .demo-row {
+      background-image: linear-gradient(90deg, #F5F5F5 4.16666667%, transparent 4.16666667%, transparent 8.33333333%, #F5F5F5 8.33333333%, #F5F5F5 12.5%, transparent 12.5%, transparent 16.66666667%, #F5F5F5 16.66666667%, #F5F5F5 20.83333333%, transparent 20.83333333%, transparent 25%, #F5F5F5 25%, #F5F5F5 29.16666667%, transparent 29.16666667%, transparent 33.33333333%, #F5F5F5 33.33333333%, #F5F5F5 37.5%, transparent 37.5%, transparent 41.66666667%, #F5F5F5 41.66666667%, #F5F5F5 45.83333333%, transparent 45.83333333%, transparent 50%, #F5F5F5 50%, #F5F5F5 54.16666667%, transparent 54.16666667%, transparent 58.33333333%, #F5F5F5 58.33333333%, #F5F5F5 62.5%, transparent 62.5%, transparent 66.66666667%, #F5F5F5 66.66666667%, #F5F5F5 70.83333333%, transparent 70.83333333%, transparent 75%, #F5F5F5 75%, #F5F5F5 79.16666667%, transparent 79.16666667%, transparent 83.33333333%, #F5F5F5 83.33333333%, #F5F5F5 87.5%, transparent 87.5%, transparent 91.66666667%, #F5F5F5 91.66666667%, #F5F5F5 95.83333333%, transparent 95.83333333%);
+      overflow: hidden;
+    }
+
+    .row-flex {
+      background: #F5F5F5;
+    }
+
+    .row div,
+    .row-flex div {
+      padding: 40px 0 ;
+      background: rgba(24, 115, 216, 0.7);
+      text-align: center;
+      min-height: 28px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: #fff;
+    }
+
+    .row .demo-col {
+      text-align: center;
+      padding: 40px 0;
+      color: #fff;
+      font-size: 18px;
+      border: none;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .row .demo-col-1 {
+      background: rgba(24, 115, 216, 0.7);
+    }
+
+    .row .demo-col-2 {
+      background: rgba(24, 115, 216, 0.5);
+    }
+
+    .row .demo-col-3 {
+      background: rgba(255, 255, 255, 0.2);
+      color: #999;
+    }
+
+    .row .demo-col-4 {
+      background: rgba(24, 115, 216, 0.6);
+    }
+
+    .row .demo-col-5 {
+      background: rgba(255, 255, 255, 0.5);
+      color: #999;
+    }
+
+    .face{
+      width: 200px;
+      height: 200px;
+      margin-right: 1px;
+      margin-bottom: 1px;
+      float: left;
+    }
+
+    .face:nth-of-type(5){
+      margin-right: 0;
+    }
+
+    .pip {
+      padding: 0 !important;
+      display: block;
+      width: 40px !important;
+      height: 40px;
+      border-radius: 50%;
+      margin: 4px;
+      background-color: #333 !important;
+      box-shadow: inset 0 3px #111, inset 0 -3px #555;
+    }
+
+    .hight-100 {
+      height: 100px;
+    }
+
+    .hight-50 {
+      height: 50px;
+    }
+
+    .hight-120 {
+      height: 120px;
+    }
+
+    .hight-80 {
+      height: 80px;
+    }
+  </style>
+</head>
+<body>
+<h1>流式布局</h1>
+
+<div class="layout-fluid">
+  <div class="row demo-row">
+    <div class="col-24 demo-col demo-col-1">
+      100%
+    </div>
+  </div>
+  <div class="row demo-row">
+    <div class="col-6 demo-col demo-col-2">
+      25%
+    </div>
+    <div class="col-6 demo-col demo-col-3">
+      25%
+    </div>
+    <div class="col-6 demo-col demo-col-2">
+      25%
+    </div>
+    <div class="col-6 demo-col demo-col-3">
+      25%
+    </div>
+  </div>
+  <div class="row demo-row">
+    <div class="col-8 demo-col demo-col-4">
+      33.33%
+    </div>
+    <div class="col-8 demo-col demo-col-5">
+      33.33%
+    </div>
+    <div class="col-8 demo-col demo-col-4">
+      33.33%
+    </div>
+  </div>
+  <div class="row demo-row">
+    <div class="col-12 demo-col demo-col-1">
+      50%
+    </div>
+    <div class="col-12 demo-col demo-col-3">
+      50%
+    </div>
+  </div>
+  <div class="row demo-row">
+    <div class="col-16 demo-col demo-col-4">
+      66.66%
+    </div>
+    <div class="col-8 demo-col demo-col-5">
+      33.33%
+    </div>
+  </div>
+</div>
+
+<h1>Flex 九宫格</h1>
+<div class="layout-fixed">
+  <div class="row-flex face">
+    <div class="col-3 pip">左</div>
+    <div class="col-3 pip">左</div>
+  </div>
+  <div class="row-flex row-flex-center face">
+    <div class="col-3 pip">中</div>
+  </div>
+  <div class="row-flex row-flex-end face">
+    <div class="col-3 pip">右</div>
+  </div>
+  <div class="row-flex row-flex-space-between face">
+    <div class="col-3 pip"></div>
+    <div class="col-3 pip"></div>
+    <div class="col-3 pip"></div>
+  </div>
+  <div class="row-flex row-flex-middle face">
+    <div class="col-3 pip"></div>
+  </div>
+  <div class="row-flex row-flex-bottom face">
+    <div class="col-3 pip"></div>
+  </div>
+  <div class="row-flex row-flex-center row-flex-middle face">
+    <div class="col-3 pip"></div>
+  </div>
+  <div class="row-flex row-flex-bottom row-flex-end face">
+    <div class="col-3 pip"></div>
+  </div></div>
+
+<h1>Flex布局</h1>
+
+<div class="layout-fixed">
+  <div class="row-flex demo-row">
+    <div class="col-24 demo-col demo-col-1">
+      100%
+    </div>
+  </div>
+  <div class="row-flex demo-row">
+    <div class="col-6 demo-col demo-col-2">
+      25%
+    </div>
+    <div class="col-6 demo-col demo-col-3">
+      25%
+    </div>
+    <div class="col-6 demo-col demo-col-2">
+      25%
+    </div>
+    <div class="col-6 demo-col demo-col-3">
+      25%
+    </div>
+  </div>
+  <div class="row-flex demo-row">
+    <div class="col-8 demo-col demo-col-4">
+      33.33%
+    </div>
+    <div class="col-8 demo-col demo-col-5">
+      33.33%
+    </div>
+    <div class="col-8 demo-col demo-col-4">
+      33.33%
+    </div>
+  </div>
+  <div class="row-flex demo-row">
+    <div class="col-12 demo-col demo-col-1">
+      50%
+    </div>
+    <div class="col-12 demo-col demo-col-3">
+      50%
+    </div>
+  </div>
+  <div class="row-flex demo-row">
+    <div class="col-16 demo-col demo-col-4">
+      66.66%
+    </div>
+    <div class="col-8 demo-col demo-col-5">
+      33.33%
+    </div>
+  </div>
+</div>
+
+<script data-debug src="__build/js/style/style.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+**/.build/*
+**/node_modules/*
+**/app.js
+**/gulpfile.js
+**/server.js
+**/make-webpack.config.js
+**/webpack*.js

@@ -1,0 +1,28 @@
+@text-height: 12px;
+@text-two-height: 24px;
+@text-three-height: 36px;
+@text-four-height: 48px;
+
+.lego-text {
+  height: @text-height;
+  line-height: @text-height;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.lego-textTwoLine {
+  height: @text-two-height;
+  -webkit-line-clamp: 2;
+}
+
+.lego-textThreeLine {
+  height: @text-three-height;
+  -webkit-line-clamp: 3;
+}
+
+.lego-textFourLine {
+  height: @text-four-height;
+  -webkit-line-clamp: 4;
+}

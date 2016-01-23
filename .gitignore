@@ -1,0 +1,9 @@
+#OSX files
+.DS_Store
+Thumbs.db
+/node_modules/
+/lib/
+/assets/
+#WebStorm
+.idea/
+*.log

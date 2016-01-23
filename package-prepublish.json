@@ -1,0 +1,32 @@
+{
+  "name": "rc-lego",
+  "version": "0.0.7",
+  "description": "react lego component",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/178518/lego.git"
+  },
+  "keywords": [
+    "react",
+    "componet"
+  ],
+  "dependencies": {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "classnames": "^2.2.0",
+    "jquery": "^2.1.4"
+  },
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/"
+  },
+  "bugs": {
+    "url": "https://github.com/178518/lego/issues"
+  },
+  "homepage": "https://github.com/178518/lego#readme"
+}
