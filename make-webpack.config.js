@@ -18,7 +18,7 @@ var srcDir = path.resolve(process.cwd(), 'src');
 var assets = 'assets/';
 var IP = '0.0.0.0';
 var PORT = 3000;
-var HMRPORT = 4000;
+var HMRPORT = 3050;
 
 var excludeFromStats = [
   /node_modules[\\\/]/

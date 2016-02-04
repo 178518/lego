@@ -1,20 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <title>pages</title>
+  <title>索引页</title>
+  <meta name="description" content="lego react compontent"/>
+  <meta name="keywords" content="lego react compontent"/>
+  <meta charset="utf-8"/>
+  <!--
+      第一个meta标签表示：强制让文档的宽度与设备的宽度保持1:1，并且文档最大的宽度比例是1.0，且不允许用户点击屏幕放大浏览；
+  尤其要注意的是content里多个属性的设置一定要用分号+空格来隔开，如果不规范将不会起作用。
+  其中：
+  width - viewport的宽度
+  height - viewport的高度
+  initial-scale - 初始的缩放比例
+  minimum-scale - 允许用户缩放到的最小比例
+  maximum-scale - 允许用户缩放到的最大比例
+  user-scalable - 用户是否可以手动缩放
+  第二个meta标签是iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览；
+  第三个meta标签也是iphone的私有标签，它指定的iphone中safari顶端的状态条的样式；
+  第四个meta标签表示：告诉设备忽略将页面中的数字识别为电话号码
+  在设置了initial-scale=1 之后，我们终于可以以1:1 的比例进行页面设计了
+      -->
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+
+  <!--icon-->
+  <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+  <!--当用户把连接保存到手机桌面时使用的图标-->
+  <link rel="apple-touch-icon" sizes="57x57" href="//apple-touch-icon-114.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="//apple-touch-icon-114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="//apple-touch-icon-144.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="//apple-touch-icon-144.png">
+
+  <link href="http://www.w3school.com.cn" hreflang="zh" rel="alternate"/>
+
+  <!--DNS预解析-->
+  <link rel="dns-prefetch" href="//github.com"/>
+
+  <script data-debug src="__build/js/flexible/flexible.js"></script>
+  <style>
+    .layout-fluid {
+      font-size: 16px;
+      text-align: center;
+    }
+
+    [data-dpr="2"] .layout-fluid {
+      font-size: 32px;
+    }
+
+    [data-dpr="3"] .layout-fluid {
+      font-size: 48px;
+    }
+  </style>
 </head>
-
 <body>
-    <ul>
-      <% pages.forEach(function(page){ %>
-        <li>
-            <a href="/<%= page %>"><%= page %></a>
-        </li>
-      <% }); %>
-    </ul>
+<div class="layout-fluid">
+  <% pages.forEach(function(page){ %>
+  <div class="row">
+    <div class="col-24">
+      <a href="/<%= page %>"><%= page %></a></div>
+  </div>
+  <% }); %>
+</div>
+<script data-debug src="__build/js/style/style.js"></script>
 </body>
-
 </html>
+
