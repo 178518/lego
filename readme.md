@@ -32,6 +32,7 @@ cnpm run build
 ### 6、启动应用
 ```
 cnpm run start
+cnpm run hmr
 ```
 
 ### 7、启动应用，模拟生产环境

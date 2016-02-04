@@ -30,7 +30,7 @@ var webpackConf = require('./webpack.config');
 var webpackDevConf = require('./webpack-dev.config');
 
 var src = process.cwd() + '/src';
-var assets = process.cwd() + '/.build';
+var assets = process.cwd() + '/assets';
 
 // js check
 gulp.task('hint', function () {
