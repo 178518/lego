@@ -24,6 +24,7 @@ var routes = require('./routes');
 
 // init framework
 var app = koa();
+var ip = webpackDevConf.ip;
 var port = webpackDevConf.port;
 
 colors.setTheme({
@@ -86,7 +87,7 @@ app.use(serve(path.resolve(__dirname, viewDir), {
 app = http.createServer(app.callback());
 
 app.listen(port, webpackDevConf.ip, function () {
-  console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port)
+  console.info("==> 🌎  Listening on port %s. Open up http://%s:%s/ in your browser.", port, ip, port);
 
   //open('http://localhost:'+port);
 });

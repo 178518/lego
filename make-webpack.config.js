@@ -18,6 +18,7 @@ var srcDir = path.resolve(process.cwd(), 'src');
 var assets = 'assets/';
 var IP = '0.0.0.0';
 var PORT = 3000;
+var HMRPORT = 4000;
 
 var excludeFromStats = [
   /node_modules[\\\/]/
@@ -34,12 +35,6 @@ function makeConf(options) {
   var entries = genEntries(debug);
   var chunks = Object.keys(entries);
 
-  var hotLoader = [
-    'webpack-dev-server/client?http://127.0.0.1:3000', // WebpackDevServer host and port
-    'webpack/hot/only-dev-server',//热部署服务配置,成功之后修改JS不需要刷新页面
-    './src/js/components/qp/index.js'//程序的入口文件
-  ];
-
   /**
    * hash
    * chunkhash
@@ -48,6 +43,7 @@ function makeConf(options) {
   var config = {
     ip: IP,
     port: PORT,
+    hmrPort: HMRPORT,
     entry: entries,
     output: {
       // 在debug模式下，__build目录是虚拟的，webpack的dev server存储在内存里
@@ -199,7 +195,7 @@ function genEntries(debug) {
      */
     var entryPath = '';
     if (debug) {
-      entryPath = entry ? ['webpack-dev-server/client?http://' + IP + ':4000', 'webpack/hot/only-dev-server', path.resolve(jsDir, name)] : '';
+      entryPath = entry ? ['webpack-dev-server/client?http://' + IP + ':' + HMRPORT, 'webpack/hot/only-dev-server', path.resolve(jsDir, name)] : '';
     } else {
       entryPath = entry ? [path.resolve(jsDir, name)] : '';
     }

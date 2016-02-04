@@ -119,11 +119,11 @@ gulp.task('hmr', function (done) {
     }
   });
 
-  devSvr.listen(4000, webpackDevConf.ip, function (err) {
+  devSvr.listen(webpackDevConf.hmrPort, webpackDevConf.ip, function (err) {
     if (err) throw new gutil.PluginError('webpack-dev-server', err);
 
     gutil.log('[webpack-dev-server]',
-      'http://localhost:4000/webpack-dev-server/index.html');
+      'http://'+webpackDevConf.ip+':'+webpackDevConf.hmrPort+'/webpack-dev-server/index.html');
 
   });
 });
