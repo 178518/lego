@@ -16,6 +16,8 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 var srcDir = path.resolve(process.cwd(), 'src');
 //编译后的目录
 var assets = 'assets/';
+var IP = '0.0.0.0';
+var PORT = 3000;
 
 var excludeFromStats = [
   /node_modules[\\\/]/
@@ -28,12 +30,9 @@ function makeConf(options) {
    * package.json 里面start读dev配置，production读正式配置
    * @type {boolean}
    */
-  var debug = options.debug !== undefined ? options.debug : true;
-  var entries = genEntries();
+  var debug = options.debug;
+  var entries = genEntries(debug);
   var chunks = Object.keys(entries);
-
-  console.log("debug mode is ++++" + debug);
-  console.log(JSON.stringify(chunks));
 
   var hotLoader = [
     'webpack-dev-server/client?http://127.0.0.1:3000', // WebpackDevServer host and port
@@ -47,10 +46,12 @@ function makeConf(options) {
    * contenthash
    */
   var config = {
+    ip: IP,
+    port: PORT,
     entry: entries,
     output: {
       // 在debug模式下，__build目录是虚拟的，webpack的dev server存储在内存里
-      path: path.resolve(debug ? '__build' : assets),
+      path: path.resolve(debug ? '__build' : assets),//打包好的资源的存放位置,__dirname不能少
       publicPath: debug ? '/__build/' : '',//用于配置文件发布路径，如CDN或本地服务器
       /**
        * [hash]：代表编译hash值，与模块集的代码有关，如果模块集的代码有修改，hash值也会变
@@ -61,7 +62,8 @@ function makeConf(options) {
        * [hash], 编译哈希值
        * [chunkhash], chunk的hash值
        */
-      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'//生产的打包文件名
+      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[hash].js'//生产的打包文件名
+      //filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'//生产的打包文件名
       //chunkFilename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js',
       //hotUpdateChunkFilename: debug ?'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'
     },
@@ -88,7 +90,7 @@ function makeConf(options) {
           loader: 'babel-loader',
           exclude: /node_modules/
         }, {
-          test: /\.js?$/,
+          test: [/\.js$/, /\.jsx$/],
           loaders: ['react-hot', 'babel'],
           exclude: /node_modules/
         }
@@ -99,21 +101,24 @@ function makeConf(options) {
     /**
      * 这里插件配件了chunkhash8js不生效，原因暂不清楚 
      */
-      /*new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),*/
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin(),
       /*new CommonsChunkPlugin({
-        name: 'comm', // 将公共模块提取，生成名为`comm`的chunk
-        chunks: chunks,
-        minChunks: chunks.length // 提取所有entry共同依赖的模块
-      }),*/
+       name: 'comm', // 将公共模块提取，生成名为`comm`的chunk
+       chunks: chunks,
+       minChunks: chunks.length // 提取所有entry共同依赖的模块
+       }),*/
       new AssetsPlugin({
         filename: 'assets.map.json',
         fullPath: true,
         update: false
       })
     ]/*,
-
      devServer: {
+     port: 3000,
+     inline: true,
+     historyApiFallback: true,
+     colors: true,
      stats: {
      cached: false,
      exclude: excludeFromStats,
@@ -153,34 +158,34 @@ function makeConf(options) {
     //css文件独立出来
     config.plugins.push(new ExtractTextPlugin('css/[name]/[name].[contenthash:8].css'));
     //config.plugins.push(new ExtractTextPlugin('css/[name].css'));
-
-    // 自动生成入口文件，入口js名必须和入口文件名相同
-    // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
-    var pages = fs.readdirSync(srcDir);
-
-    pages.forEach(function (filename) {
-      var m = filename.match(/(.+)\.html$/);
-
-      if (m) {
-        var conf = {
-          template: path.resolve(srcDir, filename),
-          filename: filename
-        };
-
-        if (m[1] in config.entry) {
-          conf.inject = 'body';
-          conf.chunks = ['comm',m[1]];
-        }
-
-        config.plugins.push(new HtmlWebpackPlugin(conf));
-      }
-    });
   }
+
+  // 自动生成入口文件，入口js名必须和入口文件名相同
+  // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
+  var pages = fs.readdirSync(srcDir);
+
+  pages.forEach(function (filename) {
+    var m = filename.match(/(.+)\.html$/);
+
+    if (m) {
+      var conf = {
+        template: path.resolve(srcDir, filename),
+        filename: filename
+      };
+
+      if (m[1] in config.entry) {
+        conf.inject = 'body';
+        conf.chunks = ['comm', m[1]];
+      }
+
+      config.plugins.push(new HtmlWebpackPlugin(conf));
+    }
+  });
 
   return config;
 }
 
-function genEntries() {
+function genEntries(debug) {
   var jsDir = path.resolve(srcDir, 'js');
   var names = fs.readdirSync(jsDir);
   var map = {};
@@ -188,7 +193,18 @@ function genEntries() {
   names.forEach(function (name) {
     var m = name.match(/(.+)\.js$/);
     var entry = m ? m[1] : '';
-    var entryPath = entry ? path.resolve(jsDir, name) : '';
+
+    /**
+     * 热加载替换部署模块
+     */
+    var entryPath = '';
+    if (debug) {
+      entryPath = entry ? ['webpack-dev-server/client?http://' + IP + ':4000', 'webpack/hot/only-dev-server', path.resolve(jsDir, name)] : '';
+    } else {
+      entryPath = entry ? [path.resolve(jsDir, name)] : '';
+    }
+
+    //var entryPath = entry ? [path.resolve(jsDir, name)] : '';
 
     if (entry) map[entry] = entryPath;
   });

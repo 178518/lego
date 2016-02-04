@@ -1,10 +1,3 @@
-/*
- * @Author: dmyang
- * @Date:   2015-06-16 15:19:59
- * @Last Modified by:   dmyang
- * @Last Modified time: 2015-08-27 11:16:12
- */
-
 'use strict';
 
 var gulp = require('gulp');
@@ -30,7 +23,7 @@ var webpackConf = require('./webpack.config');
 var webpackDevConf = require('./webpack-dev.config');
 
 var src = process.cwd() + '/src';
-var assets = process.cwd() + '/.build';
+var assets = process.cwd() + '/assets';
 
 // js check
 gulp.task('hint', function () {
@@ -44,7 +37,7 @@ gulp.task('hint', function () {
 gulp.task('lint', function () {
   return gulp.src('/js/**/*.js')
     .pipe(eslint())
-    .pipe(eslint.format());
+    .pipe(eslint.format());// 把检测结果输出到console.
 });
 
 //压缩css
@@ -82,7 +75,14 @@ gulp.task('pack', ['clean'], function (done) {
   });
 });
 
-// html process
+/*gulp.task('devpack', ['clean'], function (done) {
+  webpack(webpackDevConf, function (err, stats) {
+    if (err) throw new gutil.PluginError('webpack', err);
+    gutil.log('[webpack]', stats.toString({colors: true}));
+    done();
+  });
+});*/
+
 gulp.task('default', ['pack'], function () {
   /**
    * 对生产之后的文件进行压缩
@@ -103,27 +103,46 @@ gulp.task('default', ['pack'], function () {
     .pipe(gulp.dest(assets));
 });
 
+// html process
+/*gulp.task('dev', ['devpack'], function () {
+  /!**
+   * 对生产之后的文件进行压缩
+   *!/
+  gulp.start('minifycss', 'minifyjs');
+
+  /!**
+   * 执行HTML文件替换
+   *!/
+  return gulp
+    .src(assets + '/!*.html')
+    .pipe(replace(/<script(.+)?data-debug([^>]+)?><\/script>/g, ''))
+    // @see https://github.com/kangax/html-minifier
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      removeComments: true
+    }))
+    .pipe(gulp.dest(assets));
+});*/
+
+
 // run HMR on `cli` mode
 // @see http://webpack.github.io/docs/webpack-dev-server.html
-gulp.task('hmr', function (done) {
+/*gulp.task('hmr', function (done) {
   var WebpackDevServer = require('webpack-dev-server');
   var compiler = webpack(webpackDevConf);
 
   var devSvr = new WebpackDevServer(compiler, {
-    contentBase: webpackConf.output.path,
     publicPath: webpackDevConf.output.publicPath,
     hot: true,
-    stats: {
-      cached: false,
-      colors: true
-    }
+    noInfo: false,
+    historyApiFallback: true
   });
 
-  devSvr.listen(4000, webpackDevConf.ip, function (err) {
+  devSvr.listen(webpackDevConf.port, '0.0.0.0', function (err) {
     if (err) throw new gutil.PluginError('webpack-dev-server', err);
 
     gutil.log('[webpack-dev-server]',
-      'http://localhost:4000/webpack-dev-server/index.html');
+      'http://localhost:'+webpackDevConf.port+'/webpack-dev-server/index.html');
 
   });
-});
+});*/
