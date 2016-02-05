@@ -13,8 +13,9 @@
     "hmr": "gulp hmr",
     "lint":"npm run eslint",
     "eslint": "eslint src/js/components --ext '.js,.jsx'",
-    "prepublish": "rm -rf lib && npm run lint && babel src/js/components --out-dir lib && rm -rf lib/style && node scripts/prenpm.js",
-    "postpub":"npm run prepublish && cd lib && npm publish"
+    "prepublish": "rm -rf ./lib && npm run lint && babel src/js/components --out-dir lib && rm -rf lib/style && node scripts/prenpm.js",
+    "postpub":"npm run prepublish && cd lib && npm publish",
+    "postpublish":"rm -rf ./lib"
   },
   "dependencies": {
     "react": "^0.14.0",

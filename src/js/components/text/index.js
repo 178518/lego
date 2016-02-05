@@ -27,7 +27,7 @@ const Text = React.createClass({
 
     return (typeof (this.props.numberOfLines) === 'undefined' || (this.props.numberOfLines > 0)) ? (
       <div className={textClass} onClick={this.handleClick}>
-        1{this.props.textString}
+        {this.props.textString}
       </div>
     ) : null;
   }

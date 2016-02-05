@@ -2,14 +2,14 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import CommList from './components/comm-list';
-import CommList from 'rc-lego/comm-list';
+import CommList from './components/comm-list';
+//import CommList from 'rc-lego/comm-list';
 import JQ from 'jquery';
 
 var itemAjaxConfig = {
   url: 'https://api.weibo.com/2/statuses/public_timeline.json',
   params: {
-    source: 1437421778
+    source: 2043051649
   },
   dataType: 'jsonp',
   type: 'get',

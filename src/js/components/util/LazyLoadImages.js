@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ScrollTrigger from './ScrollTrigger';
-import Image from 'rc-lego/ScrollTrigger';
+//import ScrollTrigger from 'rc-lego/ScrollTrigger';
 import JQ from 'jquery';
 
 const LazyLoadImages = {
