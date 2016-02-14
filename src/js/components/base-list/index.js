@@ -22,6 +22,7 @@ const BaseList = {
     return {
       itemList: [],
       page: 1,
+      hasScrollBind:false,
       isLast: false,
       goTop: false
     };
@@ -49,12 +50,13 @@ const BaseList = {
         let isLast = (itemList.length === 0);
 
         this.setState({itemList: this.state.itemList.concat(itemList)}, function () {
-          this.setState({isLast: isLast, page: this.state.page + 1}, function () {
+          //传递过来的page+1取得下一页的数据
+          this.setState({isLast: isLast, page: params.page + 1}, function () {
             //延时执行绑定，防止多次请求
             clearTimeout(this.threadId);
             this.threadId = setTimeout(function () {
-              //只在第一页且不是最后一页触发，setState不是同步的
-              if (this.state.page === 2 && !isLast) {
+              //只绑定一次，且不是最后一页
+              if (!this.state.hasScrollBind && !isLast) {
                 //执行绑定前先初始化一次
                 this.start();
                 //数据绘制完成后触发滚动加载
