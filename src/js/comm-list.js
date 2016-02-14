@@ -17,14 +17,36 @@ var itemAjaxConfig = {
 };
 
 var itemSuccessDataConfig = {
-  itemList: ['data','statuses']
+  itemList: ['data', 'statuses']
 };
 
 var itemDataConfig = {
   id: 'id',
   subject: ['text'],
-  imgUrl: ['user','profile_image_url']
+  imgUrl: ['user', 'profile_image_url']
 };
 
+/*var itemAjaxConfig = {
+ url: 'http://demo.lego.com:8088/zhihu',
+ params: {
+ page: 1
+ },
+ dataType: 'jsonp',
+ type: 'get',
+ timeout: 5000
+ };
+
+ var itemSuccessDataConfig = {
+ itemList: ['stories']
+ };
+
+ var itemDataConfig = {
+ id: 'id',
+ subject: ['title'],
+ imgUrl: ['images','0']
+ };*/
+
+
 ReactDOM.render(<CommList itemAjaxConfig={itemAjaxConfig}
-                          itemSuccessDataConfig={itemSuccessDataConfig} itemDataConfig={itemDataConfig}/>, JQ('#commList')[0]);
+                          itemSuccessDataConfig={itemSuccessDataConfig}
+                          itemDataConfig={itemDataConfig}/>, JQ('#commList')[0]);
