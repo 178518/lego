@@ -58,7 +58,7 @@ function makeConf(options) {
        * [hash], 编译哈希值
        * [chunkhash], chunk的hash值
        */
-      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'//生产的打包文件名
+      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[hash].js'//生产的打包文件名
       //filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'//生产的打包文件名
       //chunkFilename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js',
       //hotUpdateChunkFilename: debug ?'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'
@@ -97,8 +97,8 @@ function makeConf(options) {
     /**
      * 这里插件配件了chunkhash8js不生效，原因暂不清楚 
      */
-      /*new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),*/
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin(),
       /*new CommonsChunkPlugin({
        name: 'comm', // 将公共模块提取，生成名为`comm`的chunk
        chunks: chunks,
