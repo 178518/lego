@@ -70,7 +70,7 @@ const BaseList = {
                   }.bind(this)
                 });
               }
-            }.bind(this), 1000);
+            }.bind(this), 10);
           });
         });
       }.bind(this),
@@ -96,7 +96,6 @@ const BaseList = {
       });
     }
   },
-
 
   handleGoTop(){
     window.scrollTo(0, 0);

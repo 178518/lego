@@ -9,7 +9,7 @@ const LazyLoadImages = {
   getDefaultProps() {
     return {
       // 延迟触发时间
-      delay: 400,
+      delay: 50,
       srcAttribute: 'data-src', // 存储图片 URL 的属性
       distance: 0, // 各图片的扩展敏感距离
       prepareLoad: null // 加载每个图片前都会执行的事件
