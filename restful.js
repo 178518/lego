@@ -11,20 +11,20 @@ var server = http.createServer(function (request, response) {
 
   //构造请求信息
   var options = {
-    hostname: 'news-at.zhihu.com',
+    /*hostname: 'news-at.zhihu.com',
     port: 80,
     path: '/api/4/news/latest',
     method: 'GET'
 
-    /*hostname: 'www.baidu.com',
+    hostname: 'www.baidu.com',
      port: 80,
      path: '/',
-     method: 'GET'
+     method: 'GET'*/
 
      hostname: 'api.t.sina.com.cn',
      port: 80,
      path: '/statuses/public_timeline.json?source=2043051649&count=5',
-     method: 'GET'*/
+     method: 'GET'
   };
 
   console.log('uri: ' + uri);
