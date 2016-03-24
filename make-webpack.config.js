@@ -25,6 +25,8 @@ var excludeFromStats = [
 ];
 
 function makeConf(options) {
+  console.log('webpack Module' + JSON.stringify(options));
+
   options = options || {};
 
   /**
@@ -58,8 +60,8 @@ function makeConf(options) {
        * [hash], 编译哈希值
        * [chunkhash], chunk的hash值
        */
-      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[hash].js'//生产的打包文件名
-      //filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'//生产的打包文件名
+      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'//生产的打包文件名
+      //filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[hash].js'//生产的打包文件名
       //chunkFilename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js',
       //hotUpdateChunkFilename: debug ?'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'
     },
@@ -79,27 +81,40 @@ function makeConf(options) {
           loaders: ['jsx?harmony']
         }, {
           test: /\.js$/,
-          exclude: /node_modules/,
-          loader: 'react-hot!jsx-loader?harmony'
+          //生产环境不编译react—hot
+          loader: debug ? 'react-hot!jsx-loader?harmony' : 'jsx-loader?harmony',
+          exclude: /node_modules/
         }, {
           test: /\.js$/,
           loader: 'babel-loader',
           exclude: /node_modules/
         }, {
           test: [/\.js$/, /\.jsx$/],
-          loaders: ['react-hot', 'babel'],
+          //生产环境不编译react—hot
+          loaders: debug ? ['react-hot', 'babel'] : ['babel'],
           exclude: /node_modules/
         }
       ]
+    },
+    externals: {
+      /**
+       * 将react分离，不打包到一起，可以使用externals。然后单独将react引入
+       * 前面就是require('jquery')的module,后面是库里面export的别名
+       * 这些文件在打包的时候不会被打包进All In的文件
+       */
+      'react': 'React',
+      'react-dom': 'ReactDOM',
+      'jquery': 'jQuery'
     },
     //最后配置一下plugins，加上热替换的插件和防止报错的插件
     plugins: [
     /**
      * 这里插件配件了chunkhash8js不生效，原因暂不清楚 
      */
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
+      /*new webpack.HotModuleReplacementPlugin(),
+       new webpack.NoErrorsPlugin(),*/
       /*new CommonsChunkPlugin({
+       //不抽取就是All IN One
        name: 'comm', // 将公共模块提取，生成名为`comm`的chunk
        chunks: chunks,
        minChunks: chunks.length // 提取所有entry共同依赖的模块
@@ -136,6 +151,10 @@ function makeConf(options) {
 
     config.module.loaders.push(cssLoader);
     config.module.loaders.push(lessLoader);
+
+    //开发环境把热部署模块编译进去
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    config.plugins.push(new webpack.NoErrorsPlugin());
   } else {
     // 编译阶段，css分离出来单独引入
     var cssLoader = {

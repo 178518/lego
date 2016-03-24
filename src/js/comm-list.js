@@ -46,7 +46,6 @@ var itemDataConfig = {
  imgUrl: ['images','0']
  };*/
 
-
 ReactDOM.render(<CommList itemAjaxConfig={itemAjaxConfig}
                           itemSuccessDataConfig={itemSuccessDataConfig}
                           itemDataConfig={itemDataConfig}/>, JQ('#commList')[0]);

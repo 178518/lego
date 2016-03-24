@@ -13,19 +13,24 @@ var open = require('open');
 
 var webpackDevMiddleware = require('koa-webpack-dev-middleware');
 var webpack = require('webpack');
+var webpackConf = require('./webpack.config');
 var webpackDevConf = require('./webpack-dev.config');
 
 // load local modules
 var pkg = require('./package.json');
+/**
+ * package.json里面配置的node模式,生产环境解析assets目录,开发环境是src目录
+ */
 var env = process.env.NODE_ENV;
 var debug = !env || env === 'development';
+console.log('If Current Node Is Debug Module ' + debug);
 var viewDir = debug ? 'src' : 'assets';
 var routes = require('./routes');
 
 // init framework
 var app = koa();
-var ip = webpackDevConf.ip;
-var port = webpackDevConf.port;
+var ip = webpackConf.ip;
+var port = webpackConf.port;
 
 colors.setTheme({
   silly: 'rainbow',

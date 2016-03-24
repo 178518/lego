@@ -101,6 +101,10 @@ const BaseList = {
     window.scrollTo(0, 0);
   },
 
+  setQueryData(data){
+
+  },
+
   renderRoot(newProps) {
     const loadingClass = classNames({
       'anticon anticon-loading': !this.state.isLast

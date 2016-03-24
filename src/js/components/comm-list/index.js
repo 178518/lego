@@ -39,7 +39,7 @@ const CommList = React.createClass({
             <Image uri={uri}/>
           </div>
           <div className="col-16">
-            <Text textString={textString} numberOfLines={numberOfLines}/>
+            AAA<Text textString={textString} numberOfLines={numberOfLines}/>
           </div>
         </div>
       );

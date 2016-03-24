@@ -17,7 +17,7 @@ var jshint = require('gulp-jshint'),
   eslint = require('gulp-eslint'),
   notify = require('gulp-notify'),
   stylish = require('jshint-stylish'),
-//esstylish = require('eslint-stylish'),
+  //esstylish = require('eslint-stylish'),
   replace = require('gulp-replace'),      // 替换
   htmlmin = require('gulp-htmlmin'),      // html压缩
   minifycss = require('gulp-minify-css'), // CSS压缩
@@ -27,7 +27,7 @@ var jshint = require('gulp-jshint'),
   clean = require('gulp-clean');          //清空文件夹
 
 var webpackConf = require('./webpack.config');
-var webpackDevConf = require('./webpack-dev.config');
+//var webpackDevConf = require('./webpack-dev.config');
 
 var src = process.cwd() + '/src';
 var assets = process.cwd() + '/assets';
@@ -107,11 +107,11 @@ gulp.task('default', ['pack'], function () {
 // @see http://webpack.github.io/docs/webpack-dev-server.html
 gulp.task('hmr', function (done) {
   var WebpackDevServer = require('webpack-dev-server');
-  var compiler = webpack(webpackDevConf);
+  var compiler = webpack(webpackConf);
 
   var devSvr = new WebpackDevServer(compiler, {
     contentBase: webpackConf.output.path,
-    publicPath: webpackDevConf.output.publicPath,
+    publicPath: webpackConf.output.publicPath,
     hot: true,
     stats: {
       cached: false,
@@ -119,11 +119,11 @@ gulp.task('hmr', function (done) {
     }
   });
 
-  devSvr.listen(webpackDevConf.hmrPort, webpackDevConf.ip, function (err) {
+  devSvr.listen(webpackConf.hmrPort, webpackConf.ip, function (err) {
     if (err) throw new gutil.PluginError('webpack-dev-server', err);
 
     gutil.log('[webpack-dev-server]',
-      'http://'+webpackDevConf.ip+':'+webpackDevConf.hmrPort+'/webpack-dev-server/index.html');
+      'http://'+webpackConf.ip+':'+webpackConf.hmrPort+'/webpack-dev-server/index.html');
 
   });
 });
