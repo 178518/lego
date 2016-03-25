@@ -63,7 +63,7 @@ function makeConf(options) {
        * [hash], 编译哈希值
        * [chunkhash], chunk的hash值
        */
-      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[hash].js'//生产的打包文件名
+      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'//生产的打包文件名
       //filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[hash].js'//生产的打包文件名
       //chunkFilename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js',
       //hotUpdateChunkFilename: debug ?'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'
@@ -99,16 +99,16 @@ function makeConf(options) {
         }
       ]
     },
-    externals: {
-      /**
+    /*externals: {
+      /!**
        * 将react分离，不打包到一起，可以使用externals。然后单独将react引入
        * 前面就是require('jquery')的module,后面是库里面export的别名
-       * 这些文件在打包的时候不会被打包进All In的文件
-       */
+       * 这些文件在打包的时候不会被打包进All In的文件,这个模式启用热部署不生效
+       *!/
       'react': 'React',
       'react-dom': 'ReactDOM',
       'jquery': 'jQuery'
-    },
+    },*/
     //最后配置一下plugins，加上热替换的插件和防止报错的插件
     plugins: [
     /**
@@ -172,6 +172,17 @@ function makeConf(options) {
 
     config.module.loaders.push(cssLoader);
     config.module.loaders.push(lessLoader);
+
+    /**
+     * 将react分离，不打包到一起，可以使用externals。然后单独将react引入
+     * 前面就是require('jquery')的module,后面是库里面export的别名
+     * 这些文件在打包的时候不会被打包进All In的文件,这个模式启用热部署不生效
+     */
+    config.externals = {
+      'react': 'React',
+      'react-dom': 'ReactDOM',
+      'jquery': 'jQuery'
+    };
 
     //css文件独立出来
     config.plugins.push(new ExtractTextPlugin('css/[name]/[name].[contenthash:8].css'));

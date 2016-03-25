@@ -51,7 +51,7 @@ gulp.task('lint', function () {
 gulp.task('minifycss', function () {
   return gulp.src(assets + '/css/*/*.css')    //需要操作的文件
     //.pipe(concat('all.css'))             //合并所有css到all.css
-    //.pipe(rename({suffix: '.min'}))     //rename压缩后的文件名
+    .pipe(rename({suffix: '.min'}))     //rename压缩后的文件名
     .pipe(minifycss())                  //执行压缩
     .pipe(gulp.dest(assets + '/css'))     //输出文件夹
     .pipe(notify({message: '样式文件处理完成'}));
@@ -61,7 +61,7 @@ gulp.task('minifycss', function () {
 gulp.task('minifyjs', function () {
   return gulp.src(assets + '/js/*/*.js')      //需要操作的文件
     //.pipe(concat('all.js'))             //合并所有js到all.js
-    //.pipe(rename({suffix: '.min'}))     //rename压缩后的文件名
+    .pipe(rename({suffix: '.min'}))     //rename压缩后的文件名
     .pipe(uglify())                     //压缩
     .pipe(gulp.dest(assets + '/js'))      //输出到文件夹
     .pipe(notify({message: 'JS文件处理完成'}));
