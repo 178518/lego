@@ -113,6 +113,8 @@ gulp.task('hmr', function (done) {
     contentBase: webpackConf.output.path,
     publicPath: webpackConf.output.publicPath,
     hot: true,
+    noInfo: false,
+    //historyApiFallback: true,
     stats: {
       cached: false,
       colors: true

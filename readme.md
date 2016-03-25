@@ -44,3 +44,10 @@ cnpm run production
 ```
 cnpm run prepublish
 ```
+
+### 9、热部署查看
+```
+http://127.0.0.1:3000/comm-list.html
+
+Dev——Server:http://127.0.0.1:3050/webpack-dev-server/comm-list.html
+```
