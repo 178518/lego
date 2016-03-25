@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CommList from './components/comm-list';
 //import CommList from 'rc-lego/comm-list';
-import JQ from 'jquery';
+import Pubsub from 'pubsub-js';
 
 var itemAjaxConfig = {
   url: 'https://api.weibo.com/2/statuses/public_timeline.json',
@@ -23,7 +23,10 @@ var itemSuccessDataConfig = {
 var itemDataConfig = {
   id: 'id',
   subject: ['text'],
-  imgUrl: ['user', 'profile_image_url']
+  imgUrl: ['user', 'profile_image_url'],
+  textClickCallBack:function(event){
+    console.log(event);
+  }
 };
 
 /*var itemAjaxConfig = {
@@ -46,6 +49,12 @@ var itemDataConfig = {
  imgUrl: ['images','0']
  };*/
 
-ReactDOM.render(<CommList itemAjaxConfig={itemAjaxConfig}
+window['commList'] = ReactDOM.render(<CommList itemAjaxConfig={itemAjaxConfig}
                           itemSuccessDataConfig={itemSuccessDataConfig}
-                          itemDataConfig={itemDataConfig}/>, JQ('#commList')[0]);
+                          itemDataConfig={itemDataConfig}/>, document.getElementById('commList'));
+
+//订阅事件,成功之后进项相应处理
+Pubsub.subscribe('getMoreData', function (msg, data) {
+  // 获得选项信息，进行相应处理
+  console.log(data);
+});

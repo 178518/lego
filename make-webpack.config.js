@@ -16,6 +16,7 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 var srcDir = path.resolve(process.cwd(), 'src');
 //编译后的目录
 var assets = 'assets/';
+var build = '__build/';
 var IP = '0.0.0.0';
 var PORT = 3000;
 var HMRPORT = 3050;
@@ -46,10 +47,12 @@ function makeConf(options) {
     ip: IP,
     port: PORT,
     hmrPort: HMRPORT,
+    build: build,
+    assets: assets,
     entry: entries,
     output: {
       // 在debug模式下，__build目录是虚拟的，webpack的dev server存储在内存里
-      path: path.resolve(debug ? '__build' : assets),//打包好的资源的存放位置,__dirname不能少
+      path: path.resolve(debug ? build : assets),//打包好的资源的存放位置,__dirname不能少
       publicPath: debug ? '/__build/' : '',//用于配置文件发布路径，如CDN或本地服务器
       /**
        * [hash]：代表编译hash值，与模块集的代码有关，如果模块集的代码有修改，hash值也会变
@@ -60,7 +63,7 @@ function makeConf(options) {
        * [hash], 编译哈希值
        * [chunkhash], chunk的hash值
        */
-      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'//生产的打包文件名
+      filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[hash].js'//生产的打包文件名
       //filename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[hash].js'//生产的打包文件名
       //chunkFilename: debug ? 'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js',
       //hotUpdateChunkFilename: debug ?'js/[name]/[name].js' : 'js/[name]/[name].[chunkhash:8].js'

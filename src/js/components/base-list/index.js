@@ -4,6 +4,7 @@ import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import ScrollTrigger from '../util/ScrollTrigger';
+import Pubsub from 'pubsub-js';
 import JQ from 'jquery';
 
 const BaseList = {
@@ -22,7 +23,8 @@ const BaseList = {
     return {
       itemList: [],
       page: 1,
-      hasScrollBind:false,
+      hasScrollBind: true,
+      ajaxLock: false,
       isLast: false,
       goTop: false
     };
@@ -42,6 +44,11 @@ const BaseList = {
       type: this.props.itemAjaxConfig.type,
       timeout: this.props.itemAjaxConfig.timeout,
       success: function (data) {
+        //ajax lock 锁,解决一次获取多个数据的问题
+        if (this.state.ajaxLock) {
+          return;
+        }
+
         let itemList = data;
 
         this.props.itemSuccessDataConfig.itemList.forEach(function (key) {
@@ -49,29 +56,43 @@ const BaseList = {
         });
         let isLast = (itemList.length === 0);
 
-        this.setState({itemList: this.state.itemList.concat(itemList)}, function () {
-          //传递过来的page+1取得下一页的数据
-          this.setState({isLast: isLast, page: params.page + 1}, function () {
-            //延时执行绑定，防止多次请求
-            clearTimeout(this.threadId);
-            this.threadId = setTimeout(function () {
-              //只绑定一次，且不是最后一页
-              if (!this.state.hasScrollBind && !isLast) {
-                //执行绑定前先初始化一次
-                this.start();
-                //数据绘制完成后触发滚动加载
-                let loadingEle = ReactDOM.findDOMNode(this.refs.loading);
-                //绑定Scroll的滚动事件
-                this.add({
-                  element: JQ(loadingEle),
-                  distance: 100,
-                  onRouse: function () {
+        //传递过来的page+1取得下一页的数据
+        this.setState({
+          itemList: this.state.itemList.concat(itemList),
+          isLast: isLast,
+          page: params.page + 1,
+          ajaxLock: false
+        }, function () {
+          //如果不绑定滚动加载,直接返回
+          if (!this.state.hasScrollBind) {
+            return;
+          }
+
+          //只绑定一次，且不是最后一页
+          if (!isLast) {
+            //执行绑定前先初始化一次
+            this.start();
+            //数据绘制完成后触发滚动加载
+            let loadingEle = ReactDOM.findDOMNode(this.refs.loading);
+            //绑定Scroll的滚动事件
+            this.add({
+              element: JQ(loadingEle),
+              distance: 100,
+              onRouse: function () {
+                if (!this.state.isLast && !this.state.ajaxLock) {
+                  //延时执行绑定,防止多次请求,注意线程不能同名,同时这个间隔必须大于ScrollTrigger的触发事件
+                  clearTimeout(this.ajaxThreadId);
+
+                  this.ajaxThreadId = setTimeout(function () {
+                    //对外publish 相应的事件消息
+                    Pubsub.publish('getMoreData', {});
                     (!this.state.isLast) && this.loadDataFromServer();
-                  }.bind(this)
-                });
-              }
-            }.bind(this), 10);
-          });
+                  }.bind(this), 55);
+
+                }
+              }.bind(this)
+            });
+          }
         });
       }.bind(this),
       error: function (xhr, status, err) {

@@ -14,7 +14,7 @@ var open = require('open');
 var webpackDevMiddleware = require('koa-webpack-dev-middleware');
 var webpack = require('webpack');
 var webpackConf = require('./webpack.config');
-var webpackDevConf = require('./webpack-dev.config');
+//var webpackDevConf = require('./webpack-dev.config');
 
 // load local modules
 var pkg = require('./package.json');
@@ -24,7 +24,8 @@ var pkg = require('./package.json');
 var env = process.env.NODE_ENV;
 var debug = !env || env === 'development';
 console.log('If Current Node Is Debug Module ' + debug);
-var viewDir = debug ? 'src' : 'assets';
+//运行的目录,开发模式运行在源码目录
+var viewDir = debug ? 'src' : webpackConf.assets;
 var routes = require('./routes');
 
 // init framework
@@ -72,8 +73,8 @@ routes(router, app, path.resolve(__dirname, viewDir));
 app.use(router.routes());
 
 if (debug) {
-  app.use(webpackDevMiddleware(webpack(webpackDevConf), {
-    publicPath: webpackDevConf.output.publicPath,
+  app.use(webpackDevMiddleware(webpack(webpackConf), {
+    publicPath: webpackConf.output.publicPath,
     hot: true,
     noInfo: false,
     historyApiFallback: true,
@@ -91,7 +92,7 @@ app.use(serve(path.resolve(__dirname, viewDir), {
 
 app = http.createServer(app.callback());
 
-app.listen(port, webpackDevConf.ip, function () {
+app.listen(port, webpackConf.ip, function () {
   console.info("==> 🌎  Listening on port %s. Open up http://%s:%s/ in your browser.", port, ip, port);
 
   //open('http://localhost:'+port);

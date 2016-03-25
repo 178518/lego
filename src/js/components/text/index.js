@@ -14,12 +14,12 @@ const Text = React.createClass({
   },
 
   handleClick(event){
-    this.props.onPress(event);
+    this.props.onPress && this.props.onPress(event);
   },
 
   render() {
     const textClass = classNames({
-      'lego-text':true,
+      'lego-text': true,
       'lego-textTwoLine': this.props.numberOfLines === 2,
       'lego-textThreeLine': this.props.numberOfLines === 3,
       'lego-textFourLine': this.props.numberOfLines === 4

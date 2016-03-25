@@ -23,7 +23,8 @@ const CommList = React.createClass({
     this.state.itemList.map(function (item, i) {
       let uri = item,
         textString = item,
-        numberOfLines = 3;
+        numberOfLines = 3,
+        textClickCallBack=this.props.itemDataConfig.textClickCallBack;
 
       this.props.itemDataConfig.imgUrl.forEach(function (key) {
         uri = uri[key];
@@ -39,7 +40,7 @@ const CommList = React.createClass({
             <Image uri={uri}/>
           </div>
           <div className="col-16">
-            <Text textString={textString} numberOfLines={numberOfLines}/>
+            <Text textString={textString} onPress={textClickCallBack} numberOfLines={numberOfLines}/>
           </div>
         </div>
       );
