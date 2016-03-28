@@ -44,11 +44,6 @@ const BaseList = {
       type: this.props.itemAjaxConfig.type,
       timeout: this.props.itemAjaxConfig.timeout,
       success: function (data) {
-        //ajax lock 锁,解决一次获取多个数据的问题
-        if (this.state.ajaxLock) {
-          return;
-        }
-
         let itemList = data;
 
         this.props.itemSuccessDataConfig.itemList.forEach(function (key) {
@@ -56,12 +51,16 @@ const BaseList = {
         });
         let isLast = (itemList.length === 0);
 
+        //取得item在队列里面的index
+        itemList.map(function (item, i) {
+          item.animIndex=i;
+        });
+
         //传递过来的page+1取得下一页的数据
         this.setState({
           itemList: this.state.itemList.concat(itemList),
           isLast: isLast,
-          page: params.page + 1,
-          ajaxLock: false
+          page: params.page + 1
         }, function () {
           //如果不绑定滚动加载,直接返回
           if (!this.state.hasScrollBind) {
@@ -79,7 +78,7 @@ const BaseList = {
               element: JQ(loadingEle),
               distance: 100,
               onRouse: function () {
-                if (!this.state.isLast && !this.state.ajaxLock) {
+                if (!this.state.isLast) {
                   //延时执行绑定,防止多次请求,注意线程不能同名,同时这个间隔必须大于ScrollTrigger的触发事件
                   clearTimeout(this.ajaxThreadId);
 

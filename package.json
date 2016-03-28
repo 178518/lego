@@ -23,7 +23,8 @@
     "classnames": "^2.2.0",
     "jquery": "^2.1.4",
     "rc-lego": "^0.0.7",
-    "pubsub-js": "^1.5.2"
+    "pubsub-js": "^1.5.2",
+    "velocity-animate": "~1.2.2"
   },
   "devDependencies": {
     "autoprefixer-loader": "~2.0.0",
