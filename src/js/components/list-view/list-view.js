@@ -4,7 +4,8 @@ import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import LazyLoadImages from '../util/LazyLoadImages';
-import JQ from 'jquery';
+//import JQ from 'jquery';
+import JQ from 'npm-zepto';
 
 const BaseList = {
   propTypes: {

@@ -6,7 +6,8 @@ import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Style from '../style';
 import LazyLoadImages from '../util/LazyLoadImages';
-import JQ from 'jquery';
+//import JQ from 'jquery';
+import JQ from 'npm-zepto';
 
 const Image = React.createClass({
   propTypes: {

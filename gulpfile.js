@@ -47,7 +47,7 @@ gulp.task('lint', function () {
     .pipe(eslint.format());
 });
 
-//压缩css
+// 压缩css
 gulp.task('minifycss', function () {
   return gulp.src(assets + '/css/*/*.css')    //需要操作的文件
     //.pipe(concat('all.css'))             //合并所有css到all.css
@@ -57,7 +57,7 @@ gulp.task('minifycss', function () {
     .pipe(notify({message: '样式文件处理完成'}));
 });
 
-//压缩，合并 js
+// 压缩，合并 js
 gulp.task('minifyjs', function () {
   return gulp.src(assets + '/js/*/*.js')      //需要操作的文件
     //.pipe(concat('all.js'))             //合并所有js到all.js
@@ -68,7 +68,7 @@ gulp.task('minifyjs', function () {
 });
 
 // clean assets,先执行hint，在执行clean
-//noinspection Eslint
+// noinspection Eslint
 gulp.task('clean', ['lint'], function () {
   return gulp.src(assets, {read: true}).pipe(clean());
 });

@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import ScrollTrigger from '../util/ScrollTrigger';
 import Pubsub from 'pubsub-js';
-import JQ from 'jquery';
+//import JQ from 'jquery';
+import JQ from 'npm-zepto';
 
 const BaseList = {
   propTypes: {

@@ -3,7 +3,8 @@
 import React from 'react';
 import ScrollTrigger from './ScrollTrigger';
 //import ScrollTrigger from 'rc-lego/ScrollTrigger';
-import JQ from 'jquery';
+//import JQ from 'jquery';
+import JQ from 'npm-zepto';
 
 const LazyLoadImages = {
   getDefaultProps() {

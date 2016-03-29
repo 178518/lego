@@ -21,7 +21,7 @@
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "classnames": "^2.2.0",
-    "jquery": "^2.1.4",
+    "npm-zepto": "^1.1.6",
     "rc-lego": "^0.0.7",
     "pubsub-js": "^1.5.2",
     "velocity-animate": "~1.2.2"

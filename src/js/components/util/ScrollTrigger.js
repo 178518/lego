@@ -1,7 +1,8 @@
 'use strict';
 
 import React from 'react';
-import JQ from 'jquery';
+//import JQ from 'jquery';
+import JQ from 'npm-zepto';
 
 const ScrollTrigger = {
   getInitialState() {
