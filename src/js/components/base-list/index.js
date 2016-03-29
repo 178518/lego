@@ -54,7 +54,7 @@ const BaseList = {
 
         //取得item在队列里面的index
         itemList.map(function (item, i) {
-          item.animIndex=i;
+          item.animIndex = i;
         });
 
         //传递过来的page+1取得下一页的数据

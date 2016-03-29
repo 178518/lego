@@ -24,7 +24,9 @@
     "npm-zepto": "^1.1.6",
     "rc-lego": "^0.0.7",
     "pubsub-js": "^1.5.2",
-    "velocity-animate": "~1.2.2"
+    "velocity-animate": "~1.2.2",
+    "fetch": "^1.0.1",
+    "es6-promise": "^3.1.2"
   },
   "devDependencies": {
     "autoprefixer-loader": "~2.0.0",
