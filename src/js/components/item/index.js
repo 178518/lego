@@ -46,7 +46,7 @@ const Item = React.createClass({
         // http://easings.net/zh-cn
         velocity(node,
           {opacity: [1, 0], translateY: [0, 50]}, {
-            delay: (100 * this.props.product.animIndex),
+            delay: (100 * this.props.item.animIndex),
             duration: 500,
             easing:[0.6, -0.28, 0.735, 0.045],
             visibility: 'visible'
