@@ -7,6 +7,7 @@ import ScrollTrigger from '../util/ScrollTrigger';
 import Pubsub from 'pubsub-js';
 //import JQ from 'jquery';
 import JQ from 'npm-zepto';
+import jsonp from '../util/Jsonp';
 
 const BaseList = {
   propTypes: {
@@ -38,7 +39,7 @@ const BaseList = {
       params[this.props.itemSuccessDataConfig.page] = this.state.page;
     }
 
-    JQ.ajax({
+    /*JQ.ajax({
       url: this.props.itemAjaxConfig.url,
       data: params,
       dataType: this.props.itemAjaxConfig.dataType,
@@ -98,6 +99,70 @@ const BaseList = {
       }.bind(this),
       error: function (xhr, status, err) {
       }.bind(this)
+    });*/
+
+    jsonp(this.props.itemAjaxConfig.url,{
+      method: this.props.itemAjaxConfig.type,
+      timeout:this.props.itemAjaxConfig.timeout,
+      mode:"no-cors",
+      credentials:"include"//诸如cookie之类的凭证的请求
+    }).then(function (response) {
+      //this需要递进传递
+      if (response.ok) {
+        response.json().then(function(data){
+          let itemList = data;
+
+          this.props.itemSuccessDataConfig.itemList.forEach(function (key) {
+            itemList = (itemList[key] === undefined) ? [] : itemList[key];
+          });
+
+          let isLast = (itemList.length === 0);
+
+          //取得item在队列里面的index
+          itemList.map(function (item, i) {
+            item.animIndex = i;
+          });
+
+          //传递过来的page+1取得下一页的数据
+          this.setState({
+            itemList: this.state.itemList.concat(itemList),
+            isLast: isLast
+          }, function () {
+            //如果不绑定滚动加载,直接返回
+            if (!this.state.hasScrollBind) {
+              return;
+            }
+
+            //只绑定一次，且不是最后一页
+            if (!isLast) {
+              //执行绑定前先初始化一次
+              this.start();
+              //数据绘制完成后触发滚动加载
+              let loadingEle = ReactDOM.findDOMNode(this.refs.loading);
+              //绑定Scroll的滚动事件
+              this.add({
+                element: JQ(loadingEle),
+                distance: 100,
+                onRouse: function () {
+                  if (!this.state.isLast) {
+                    //延时执行绑定,防止多次请求,注意线程不能同名,同时这个间隔必须大于ScrollTrigger的触发事件
+                    clearTimeout(this.ajaxThreadId);
+
+                    this.ajaxThreadId = setTimeout(function () {
+                      //对外publish 相应的事件消息
+                      Pubsub.publish('getMoreData', {});
+                      (!this.state.isLast) && this.loadDataFromServer();
+                    }.bind(this), 55);
+
+                  }
+                }.bind(this)
+              });
+            }
+          });
+        }.bind(this));
+      }
+    }.bind(this), function (e) {
+      console.log("Fetch failed!", e);
     });
   },
 

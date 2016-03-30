@@ -8,12 +8,20 @@ import Pubsub from 'pubsub-js';
 import fetch from './components/util/Fetch';
 import jsonp from './components/util/Jsonp';
 
-var itemAjaxConfig = {
+/*var itemAjaxConfig = {
   //url: 'https://api.weibo.com/2/statuses/public_timeline.json',
-  url: 'http://127.0.0.1:8088/weibo',
+  url: 'http://www.yuuso.com/weibo',
   params: {
     count: 10
   },
+  dataType: 'jsonp',
+  type: 'get',
+  timeout: 5000
+};*/
+
+var itemAjaxConfig = {
+  //url: 'https://api.weibo.com/2/statuses/public_timeline.json',
+  url: 'http://www.yuuso.com/weibo?count=10',
   dataType: 'jsonp',
   type: 'get',
   timeout: 5000
@@ -82,9 +90,9 @@ fetch('/test.json',{
   }
 }, function (e) {
   console.log("Fetch failed!", e);
-});*/
+});
 
-jsonp('http://127.0.0.1:8088/weibo',{
+jsonp('http://www.yuuso.com/weibo',{
   method: 'GET',
   timeout:5000,
   credentials:"include"//诸如cookie之类的凭证的请求
@@ -99,7 +107,7 @@ jsonp('http://127.0.0.1:8088/weibo',{
   }
 }, function (e) {
   console.log("Fetch failed!", e);
-});
+});*/
 
 window['commList'] = ReactDOM.render(<CommList itemAjaxConfig={itemAjaxConfig}
                                                itemSuccessDataConfig={itemSuccessDataConfig}
