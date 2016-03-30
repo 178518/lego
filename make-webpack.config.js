@@ -181,7 +181,8 @@ function makeConf(options) {
     config.externals = {
       'react': 'React',
       'react-dom': 'ReactDOM',
-      'jquery': 'jQuery'
+      //'jquery': 'jQuery'
+      'npm-zepto': 'Zepto'
     };
 
     //css文件独立出来
