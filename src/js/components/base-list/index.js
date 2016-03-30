@@ -50,6 +50,7 @@ const BaseList = {
         this.props.itemSuccessDataConfig.itemList.forEach(function (key) {
           itemList = (itemList[key] === undefined) ? [] : itemList[key];
         });
+
         let isLast = (itemList.length === 0);
 
         //取得item在队列里面的index

@@ -8,29 +8,20 @@ var url = require('url');
 var server = http.createServer(function (request, response) {
   var uri = url.parse(request.url).pathname;
   var callback = qs.parse(url.parse(request.url).query).callback;
+  var count = qs.parse(url.parse(request.url).query).count || 5;
 
   //构造请求信息
   var options = {
-    /*hostname: 'news-at.zhihu.com',
-    port: 80,
-    path: '/api/4/news/latest',
-    method: 'GET'
-
-    hostname: 'www.baidu.com',
-     port: 80,
-     path: '/',
-     method: 'GET'*/
-
      hostname: 'api.t.sina.com.cn',
      port: 80,
-     path: '/statuses/public_timeline.json?source=2043051649&count=5',
+     path: '/statuses/public_timeline.json?source=2043051649&count='+count,
      method: 'GET'
   };
 
   console.log('uri: ' + uri);
   console.log('callback: ' + callback);
 
-  if (uri === '/zhihu') {
+  if (uri === '/weibo') {
     //发起一个客户端请求
     var client_request = http.request(options, function (res) {
       //响应状态，响应头信息
