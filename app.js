@@ -82,6 +82,7 @@ if (debug) {
    * 用以接收Webpack推送过来的代码模块，进而可以通知所有相关React组件进行重新Render。
    */
   app.use(webpackDevMiddleware(webpack(webpackConf), {
+    //contentBase: webpackConf.output.path,
     publicPath: webpackConf.output.publicPath,
     hot: true,
     noInfo: false,
