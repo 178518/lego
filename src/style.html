@@ -37,9 +37,11 @@
   <link href="http://www.w3school.com.cn" hreflang="zh" rel="alternate"/>
 
   <!--DNS预解析-->
-  <link rel="dns-prefetch" href="//github.com" />
+  <link rel="dns-prefetch" href="//github.com"/>
 
   <script src="//www.52pi.cc/static/js/flexible.js"></script>
+
+  <link rel="stylesheet" href="//www.52pi.cc/static/css/style.min.css">
   <!--这里样式是异步模式，所以要强制写-->
   <style>
     div[class^="col-"] {
@@ -58,7 +60,7 @@
 
     .row div,
     .row-flex div {
-      padding: 40px 0 ;
+      padding: 40px 0;
       background: rgba(24, 115, 216, 0.7);
       text-align: center;
       min-height: 28px;
@@ -98,7 +100,7 @@
       color: #999;
     }
 
-    .face{
+    .face {
       width: 200px;
       height: 200px;
       margin-right: 1px;
@@ -106,7 +108,7 @@
       float: left;
     }
 
-    .face:nth-of-type(5){
+    .face:nth-of-type(5) {
       margin-right: 0;
     }
 
@@ -218,7 +220,8 @@
   </div>
   <div class="row-flex row-flex-bottom row-flex-end face">
     <div class="col-3 pip"></div>
-  </div></div>
+  </div>
+</div>
 
 <h1>Flex布局</h1>
 
@@ -271,7 +274,22 @@
   </div>
 </div>
 
+<h1>按钮</h1>
+
+<div class="layout-fixed">
+  <div class="ant-btn ant-btn-primary">主按钮</div>
+  <div class="ant-btn">次按钮</div>
+  <div class="ant-btn ant-btn-ghost">幽灵按钮</div>
+  <div class="ant-btn ant-btn-dashed">虚线按钮</div>
+
+  <div class="ant-btn ant-btn-primary ant-btn-lg">大号按钮</div>
+  <div class="ant-btn ant-btn-primary">中号按钮(默认)</div>
+  <div class="ant-btn ant-btn-primary ant-btn-sm">小号按钮</div>
+
+  <div class="ant-btn ant-btn-primary ant-btn-circle ant-btn-lg"><i class="anticon anticon-search"></i></div>
+  <div class="ant-btn ant-btn-ghost ant-btn-circle-outline ant-btn-lg"><i class="anticon anticon-search"></i></div>
+</div>
+
 <script src="//www.52pi.cc/static/js/??react.min.js,react-dom.min.js,zepto.min.js"></script>
-<script data-debug src="__build/js/style/style.js"></script>
 </body>
 </html>

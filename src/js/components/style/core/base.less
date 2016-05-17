@@ -1,4 +1,4 @@
-@import "normalize";
+@import "./normalize.less";
 
 * {
   box-sizing: border-box;
@@ -34,6 +34,7 @@ button,input,select,textarea {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
+  color: inherit;
 }
 
 ul,
@@ -46,14 +47,19 @@ input::-ms-clear, input::-ms-reveal {
   display: none;
 }
 
+::selection {
+  background: @primary-color;
+  color: #fff;
+}
+
 // Links
-// --  TODO  --
 a {
   color: @link-color;
   background: transparent;
   text-decoration: none;
   outline: none;
   cursor: pointer;
+  transition: color .3s ease;
 
   &:hover {
     color: @link-hover-color;
@@ -70,7 +76,7 @@ a {
   }
 
   &[disabled] {
-    // color: @grey-200;
+    color: #ccc;
     cursor: not-allowed;
     pointer-events: none;
   }
@@ -79,9 +85,6 @@ a {
 // Utility classes
 .clearfix {
   .clearfix();
-}
-.center-block {
-  .center-block();
 }
 .pull-left {
   float: left;
@@ -97,6 +100,15 @@ a {
 }
 .invisible {
   visibility: hidden;
+}
+
+.ant-divider {
+  margin: 0 4px;
+  color: #999;
+  display: inline-block;
+  height: 8px;
+  width: 1px;
+  background: #ccc;
 }
 
 code,

@@ -21,7 +21,7 @@ import jsonp from './components/util/Jsonp';
 
 var itemAjaxConfig = {
   //url: 'https://api.weibo.com/2/statuses/public_timeline.json',
-  url: 'http://www.yuuso.com/weibo?count=10',
+  url: '//www.52pi.cc/weibo?count=10',
   dataType: 'jsonp',
   type: 'get',
   timeout: 5000

@@ -2,7 +2,7 @@
 
 // rotate for ie8 and blow
 .ie-rotate(@rotation) {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=@rotation);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=@{rotation})";
 }
 
 // rotate for ie8 and blow
@@ -13,7 +13,7 @@
   @costheta: ~`Math.cos("@{radians}")`;
   @sintheta: ~`Math.sin("@{radians}")`;
   @negsintheta: ~`"@{sintheta}" * -1`;
-  filter: ~"progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=@{costheta}, M12=@{negsintheta}, M21=@{sintheta}, M22=@{costheta})";
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=@{costheta}, M12=@{negsintheta}, M21=@{sintheta}, M22=@{costheta})";
   zoom: 1;
 
   :root & {
@@ -38,5 +38,22 @@
   .ie-rotate-via-degrees(@rotate);
   :root & {
     font-size: @font-size-base; // reset ie9 and above
+  }
+}
+
+// Placeholder text
+.placeholder(@color: @input-placeholder-color) {
+  // Firefox
+  &::-moz-placeholder {
+    color: @color;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+  // Internet Explorer 10+
+  &:-ms-input-placeholder {
+    color: @color;
+  }
+  // Safari and Chrome
+  &::-webkit-input-placeholder {
+    color: @color;
   }
 }
