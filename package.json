@@ -15,7 +15,8 @@
     "eslint": "eslint src/js/components --ext '.js,.jsx'",
     "prepublish": "rm -rf ./lib && npm run lint && babel src/js/components --out-dir lib && rm -rf lib/style && node scripts/prenpm.js",
     "postpub":"npm run prepublish && cd lib && npm publish",
-    "postpublish":"rm -rf ./lib"
+    "postpublish":"rm -rf ./lib",
+    "test": "karma start"
   },
   "dependencies": {
     "react": "^15",
@@ -27,9 +28,7 @@
     "velocity-animate": "~1.2.2",
     "whatwg-fetch": "^0.11.0",
     "fetch-jsonp": "^1.0.0",
-    "es6-promise": "^3.1.2",
-    "material-ui": "^0.15.0-alpha.2",
-    "react-tap-event-plugin": "^0.2.0"
+    "es6-promise": "^3.1.2"
   },
   "devDependencies": {
     "autoprefixer-loader": "~2.0.0",
@@ -83,7 +82,20 @@
     "webpack": "^1.10.5",
     "webpack-dev-server": "^1.10.1",
     "assets-webpack-plugin": "~3.2.0",
-    "open": "0.0.5"
+    "open": "0.0.5",
+    "karma": "^0.13.21",
+    "karma-jasmine": "^0.3.7",
+    "jasmine-core": "^2.4.1",
+    "karma-mocha": "^0.2.1",
+    "karma-mocha-reporter": "^1.1.5",
+    "karma-coverage": "^0.5.3",
+    "karma-coveralls": "1.x",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-firefox-launcher": "~0.1.6",
+    "karma-ie-launcher": "~0.2.0",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-safari-launcher": "~0.1.1",
+    "karma-sauce-launcher": "~0.2.14"
   },
   "precommit": [
   ]
