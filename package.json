@@ -95,7 +95,8 @@
     "karma-ie-launcher": "~0.2.0",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-safari-launcher": "~0.1.1",
-    "karma-sauce-launcher": "~0.2.14"
+    "karma-sauce-launcher": "~0.2.14",
+    "bigpipe.js": "0.9.x"
   },
   "precommit": [
   ]
