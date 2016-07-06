@@ -23,8 +23,8 @@ View.prototype.render = function* () {
   var context = this;
 
   var options = [
-    {id:"A",html:"moduleAA",delay:0},
-    {id:"B",html:"moduleBB",delay:1000},
+    {id:"A",html:"moduleAA",delay:1000},
+    {id:"B",html:"moduleBB",delay:0},
     {id:"C",html:"moduleCC",delay:2000}
   ];
 
