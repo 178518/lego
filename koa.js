@@ -14,7 +14,7 @@ var port = '8088';
 //运行的目录,开发模式运行在源码目录
 var viewDir = 'src';
 //路由
-var routes = require('./kao_routes');
+var routes = require('./koa_routes');
 
 //主题设置
 colors.setTheme({
