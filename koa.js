@@ -58,7 +58,7 @@ app.use(function *(next) {
 routes(router, app, path.resolve(__dirname, viewDir));
 app.use(router.routes());
 
-// handle static files
+//handle static files
 app.use(serve(path.resolve(__dirname, viewDir), {
   maxage: 0
 }));
